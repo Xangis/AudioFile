@@ -50,6 +50,8 @@ private:
     unsigned short _blockAlign;
 #ifdef WIN32
 	XAUDIO2_BUFFER* _xbuffer;
+	// Called when replacing an existing sample.
+	bool ReplaceBuffer();
 #endif
 };
 

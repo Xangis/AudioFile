@@ -87,6 +87,10 @@ bool WaveFile::Load( const wchar_t* filename )
 bool WaveFile::Load( const char* filename )
 {
 	memset(&_sfinfo, 0, sizeof(SF_INFO));
+	if( _soundFile != NULL )
+	{
+		sf_close(_soundFile);
+	}
     _soundFile = sf_open( filename, SFM_READ, &_sfinfo );
 
     if( _soundFile == NULL )
@@ -156,7 +160,7 @@ bool WaveFile::Load( const char* filename )
 	{
 		return false;
 	}
-
+	ReplaceBuffer();
     return true;
 }
 
@@ -248,4 +252,24 @@ XAUDIO2_BUFFER* WaveFile::GetXAudio2Buffer()
 	return _xbuffer;
 
 }
+
+/* 
+Replaces the existing XAudio2 buffer with new data when a new sample is loaded. 
+*/
+bool WaveFile::ReplaceBuffer()
+{
+	if( _xbuffer != NULL )
+	{
+		delete[] _xbuffer->pAudioData;
+		delete _xbuffer;
+		_xbuffer = NULL;
+	}
+	XAUDIO2_BUFFER* buffer = GetXAudio2Buffer();
+	if( buffer != NULL )
+	{
+		return true;
+	}
+	return false;
+}
+
 #endif
