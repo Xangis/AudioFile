@@ -182,6 +182,7 @@ int WaveFile::GetLength()
     {
         return _numSamples / _sampleRate;
     }
+    return -1;
 }
 
 /**
