@@ -5,11 +5,14 @@
 #ifndef linux
 // Windows.h is required by XAudio2. So is audiodefs.2 (includes filter parameter struct).
 // Required for wx compatibility if we include windows.h. Which is bullshit. Now a wave file loader depends on XAudio, Windows, wxWidgets, and all that shit.
-#include "wx/wx.h"
+//#include "wx/wx.h"
 // If we do this instead, we get weird linker errors.
-//#include "Windows.h"
+#include "Windows.h"
+#include "wx/msw/winundef.h"
+#ifndef USE_XAUDIO
 #include <audiodefs.h>
 #include <xaudio2.h>
+#endif
 #endif
 
 /**
@@ -35,9 +38,13 @@ public:
     short* GetChunk( unsigned int start, unsigned int end );
 	static WaveFile* Load(const char* filename, bool allowNull );
 	static WaveFile* Load(const wchar_t* filename, bool allowNull );
+	int GetLength();
 #ifdef WIN32
+#ifdef USE_XAUDIO
 	WAVEFORMATEX* GetWaveFormatEx();
 	XAUDIO2_BUFFER* GetXAudio2Buffer();
+	bool ReplaceBuffer();
+#endif
 #endif
 private:
     SF_INFO _sfinfo;
@@ -49,9 +56,10 @@ private:
 	unsigned short _bitsPerSample;
     unsigned short _blockAlign;
 #ifdef WIN32
+#ifdef USE_XAUDIO
 	XAUDIO2_BUFFER* _xbuffer;
 	// Called when replacing an existing sample.
-	bool ReplaceBuffer();
+#endif
 #endif
 };
 
