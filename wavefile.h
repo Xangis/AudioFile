@@ -6,11 +6,15 @@
 // Windows.h is required by XAudio2. So is audiodefs.2 (includes filter parameter struct).
 // Required for wx compatibility if we include windows.h. Which is bullshit. Now a wave file loader depends on XAudio, Windows, wxWidgets, and all that shit.
 //#include "wx/wx.h"
+// This doesn't seem to be the right solution.
 //#ifndef USE_QT
 //#include "Windows.h"
 //#include "wx/msw/winundef.h"
 //#endif
 #ifdef USE_XAUDIO
+// If we do this instead, we get weird linker errors.
+#include "Windows.h"
+#include "wx/msw/winundef.h"
 #include <audiodefs.h>
 #include <xaudio2.h>
 #endif

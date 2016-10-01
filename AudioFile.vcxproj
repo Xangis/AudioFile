@@ -172,9 +172,11 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="soundfont.cpp" />
     <ClCompile Include="wavefile.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="soundfont.h" />
     <ClInclude Include="wavefile.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
