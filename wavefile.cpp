@@ -21,7 +21,11 @@ WaveFile::WaveFile()
     _blockAlign = 0;
 	_bitsPerSample = 16;    
 	_soundFile = NULL;
+#ifdef WIN32
+#ifdef USE_XAUDIO
 	_xbuffer = NULL;
+#endif
+#endif
 }
 
 WaveFile::~WaveFile()
@@ -95,6 +99,7 @@ bool WaveFile::Load( const char* filename )
 
     if( _soundFile == NULL )
     {
+        printf("Could not open %s\n", filename);
         return false;
     }
 
@@ -160,8 +165,23 @@ bool WaveFile::Load( const char* filename )
 	{
 		return false;
 	}
+#ifdef WIN32
+#ifdef USE_XAUDIO
 	ReplaceBuffer();
+#endif
+#endif
     return true;
+}
+
+/**
+ * Gets the length of the wave file in seconds.
+ */
+int WaveFile::GetLength()
+{
+    if( _sampleRate > 0 )
+    {
+        return _numSamples / _sampleRate;
+    }
 }
 
 /**
@@ -216,6 +236,7 @@ short* WaveFile::GetChunk( unsigned int start, unsigned int end )
 * Retreives a WAVEFORMATEX structure based on the wave file data.
 */
 #ifdef WIN32
+#ifdef USE_XAUDIO2
 WAVEFORMATEX* WaveFile::GetWaveFormatEx()
 {
 	WAVEFORMATEX* wfx = new WAVEFORMATEX;
@@ -272,4 +293,5 @@ bool WaveFile::ReplaceBuffer()
 	return false;
 }
 
+#endif // ifdef USE_XAUDIO2
 #endif
