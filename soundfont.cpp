@@ -14,6 +14,7 @@ SoundFont::SoundFont()
 	_comment = NULL;
 	_copyright = NULL;
 	_sampleData = NULL;
+	_rom = NULL;
 	_sampleDataLength = 0;
 }
 
@@ -237,6 +238,30 @@ bool SoundFont::ProcessInfoListChunk(unsigned char* data, unsigned int size)
 			memcpy(_copyright, &(data[ptr]), value);
 			printf("Copyright: %s", _copyright);
 			ptr += value;
+		}
+		else if( memcmp( charData, "irom", 4 ) == 0 )
+		{
+			printf("irom section found.");
+    		memcpy(charData, &(data[ptr]), 4);
+	    	ptr += 4;
+			if( _rom != NULL )
+			{
+				delete[] _rom;
+			}
+			_rom = new unsigned char[value];
+			memcpy(_rom, &(data[ptr]), value);
+			printf("ROM: %s", _rom);
+			ptr += value;
+		}
+		else if( memcmp( charData, "iver", 4 ) == 0 )
+		{
+			printf("iver section found.");
+    		memcpy(charData, &(data[ptr]), 4);
+		    ptr += 4;
+			printf("Section is %d bytes", value);
+			memcpy(&_romVersionInfo, &(data[ptr]), 4);
+			ptr += 4;
+			printf("Major version: %d, Minor version: %d", _romVersionInfo.wMajor, _romVersionInfo.wMinor);
 		}
 		else
 		{

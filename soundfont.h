@@ -157,8 +157,10 @@ private:
 	unsigned char* _comment;
 	unsigned char* _copyright;
 	unsigned char* _sampleData;
+	unsigned char* _rom;
 	unsigned int _sampleDataLength;
 	sfVersionTag _versionInfo;
+	sfVersionTag _romVersionInfo;
 };
 
 #endif
