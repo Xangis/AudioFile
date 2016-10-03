@@ -279,6 +279,10 @@ bool SoundFont::ProcessSdtaListChunk(unsigned char* data, unsigned int size)
 			printf("Sample loaded with size %d bytes", value);
 			_sampleDataLength = value;
 		}
+		else
+		{
+			printf("Unknown section found: %c%c%c%c", charData[0], charData[1], charData[2], charData[3]);
+		}
 	}
 	return true;
 }
@@ -293,19 +297,161 @@ bool SoundFont::ProcessPdtaListChunk(unsigned char* data, unsigned int size)
 	ptr += 4;
 	if( memcmp(charData, "pdta", 4) != 0 )
 	{
-		printf("Invalid sdta chunk.");
+		printf("Invalid pdta chunk.");
 		return 0;
 	}
 	while( ptr < size )
 	{
 		memcpy(charData, &(data[ptr]), 4);
 		ptr += 4;
+		if( memcmp( charData, "phdr", 4 ) == 0 )
+		{
+			printf("phdr section found.");
+    		memcpy(charData, &(data[ptr]), 4);
+		    ptr += 4;
+			printf("Section is %d bytes", value);
+			unsigned char* theData = new unsigned char[value];
+			memcpy(theData, &(data[ptr]), value);
+			sfPresetHeader presetHdr;
+			for( int i = 0; i < value/38; i++ )
+			{
+				memcpy( &presetHdr, &(data[ptr]), 38 );
+				ptr += 38;
+			}
+			delete[] theData;
+		}
+		else if( memcmp( charData, "pbag", 4 ) == 0 )
+		{
+			printf("pbag section found.");
+    		memcpy(charData, &(data[ptr]), 4);
+		    ptr += 4;
+			printf("Section is %d bytes", value);
+			unsigned char* theData = new unsigned char[value];
+			memcpy(theData, &(data[ptr]), value);
+			sfPresetBag presetBag;
+			for( int i = 0; i < value/4; i++ )
+			{
+				memcpy( &presetBag, &(data[ptr]), 4 );
+				ptr += 4;
+			}
+			delete[] theData;
+		}
+		else if( memcmp( charData, "pmod", 4 ) == 0 )
+		{
+			printf("pmod section found.");
+    		memcpy(charData, &(data[ptr]), 4);
+		    ptr += 4;
+			printf("Section is %d bytes", value);
+			unsigned char* theData = new unsigned char[value];
+			memcpy(theData, &(data[ptr]), value);
+			sfModList modList;
+			for( int i = 0; i < value/10; i++ )
+			{
+				memcpy( &modList, &(data[ptr]), 10 );
+				ptr += 10;
+			}
+			delete[] theData;
+		}
+		else if( memcmp( charData, "pgen", 4 ) == 0 )
+		{
+			printf("pgen section found.");
+    		memcpy(charData, &(data[ptr]), 4);
+		    ptr += 4;
+			printf("Section is %d bytes", value);
+			unsigned char* theData = new unsigned char[value];
+			memcpy(theData, &(data[ptr]), value);
+			sfGenList genList;
+			for( int i = 0; i < value/4; i++ )
+			{
+				memcpy( &genList, &(data[ptr]), 4 );
+				ptr += 4;
+			}
+			delete[] theData;
+		}
+		else if( memcmp( charData, "inst", 4 ) == 0 )
+		{
+			printf("inst section found.");
+    		memcpy(charData, &(data[ptr]), 4);
+		    ptr += 4;
+			printf("Section is %d bytes", value);
+			unsigned char* theData = new unsigned char[value];
+			memcpy(theData, &(data[ptr]), value);
+			sfInst inst;
+			for( int i = 0; i < value/22; i++ )
+			{
+				memcpy( &inst, &(data[ptr]), 22 );
+				ptr += 22;
+			}
+			delete[] theData;
+		}
+		else if( memcmp( charData, "ibag", 4 ) == 0 )
+		{
+			printf("ibag section found.");
+    		memcpy(charData, &(data[ptr]), 4);
+		    ptr += 4;
+			printf("Section is %d bytes", value);
+			unsigned char* theData = new unsigned char[value];
+			memcpy(theData, &(data[ptr]), value);
+			sfInstBag instBag;
+			for( int i = 0; i < value/4; i++ )
+			{
+				memcpy( &instBag, &(data[ptr]), 4 );
+				ptr += 4;
+			}
+			delete[] theData;
+		}
+		else if( memcmp( charData, "imod", 4 ) == 0 )
+		{
+			printf("imod section found.");
+    		memcpy(charData, &(data[ptr]), 4);
+		    ptr += 4;
+			printf("Section is %d bytes", value);
+			unsigned char* theData = new unsigned char[value];
+			memcpy(theData, &(data[ptr]), value);
+			sfModList modList;
+			for( int i = 0; i < value/10; i++ )
+			{
+				memcpy( &modList, &(data[ptr]), 10 );
+				ptr += 10;
+			}
+			delete[] theData;
+		}
+		else if( memcmp( charData, "igen", 4 ) == 0 )
+		{
+			printf("igen section found.");
+    		memcpy(charData, &(data[ptr]), 4);
+		    ptr += 4;
+			printf("Section is %d bytes", value);
+			unsigned char* theData = new unsigned char[value];
+			memcpy(theData, &(data[ptr]), value);
+			sfInstGenList genList;
+			for( int i = 0; i < value/4; i++ )
+			{
+				memcpy( &genList, &(data[ptr]), 4 );
+				ptr += 4;
+			}
+			delete[] theData;
+		}
+		else if( memcmp( charData, "shdr", 4 ) == 0 )
+		{
+			printf("shdr section found.");
+    		memcpy(charData, &(data[ptr]), 4);
+		    ptr += 4;
+			printf("Section is %d bytes", value);
+			unsigned char* theData = new unsigned char[value];
+			memcpy(theData, &(data[ptr]), value);
+			sfSample sample;
+			for( int i = 0; i < value/46; i++ )
+			{
+				memcpy( &sample, &(data[ptr]), 46 );
+				ptr += 46;
+			}
+			delete[] theData;
+		}
+		else
+		{
+			printf("Unknown section found: %c%c%c%c", charData[0], charData[1], charData[2], charData[3]);
+		}
 	}
-  //      if( memcmp( charData, "pdta", 4 ) == 0 )
-		//{
-		//	printf("pdta section found.");
-  //  		memcpy(charData, &(data[ptr]), 4);
-	 //   	ptr += 4;
-		//}
 	return true;
 }
