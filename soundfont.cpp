@@ -20,6 +20,52 @@ SoundFont::SoundFont()
 
 SoundFont::~SoundFont()
 {
+	if( _name != 0 ) delete _name;
+	if( _engine != 0 ) delete _engine;
+	if( _product != 0 ) delete _product;
+	if( _engineer != 0 ) delete _engineer;
+	if( _software != 0 ) delete _software;
+	if( _date != 0 ) delete _date;
+	if( _comment != 0 ) delete _comment;
+	if( _copyright != 0 ) delete _copyright;
+	if( _sampleData != 0 ) delete _sampleData;
+	if( _rom != 0 ) delete _rom;
+	for( std::list<sfSample*>::iterator it = _samples.begin(); it != _samples.end(); it++ )
+	{
+		delete *it;
+	}
+	for( std::list<sfPresetHeader*>::iterator it = _presets.begin(); it != _presets.end(); it++ )
+	{
+		delete *it;
+	}
+	for( std::list<sfPresetBag*>::iterator it = _presetBags.begin(); it != _presetBags.end(); it++ )
+	{
+		delete *it;
+	}
+	for( std::list<sfModList*>::iterator it = _presetModulators.begin(); it != _presetModulators.end(); it++ )
+	{
+		delete *it;
+	}
+	for( std::list<sfGenList*>::iterator it = _presetGenerators.begin(); it != _presetGenerators.end(); it++ )
+	{
+		delete *it;
+	}
+	for( std::list<sfInst*>::iterator it = _instruments.begin(); it != _instruments.end(); it++ )
+	{
+		delete *it;
+	}
+	for( std::list<sfInstBag*>::iterator it = _instrumentBags.begin(); it != _instrumentBags.end(); it++ )
+	{
+		delete *it;
+	}
+	for( std::list<sfModList*>::iterator it = _instrumentModulators.begin(); it != _instrumentModulators.end(); it++ )
+	{
+		delete *it;
+	}
+	for( std::list<sfInstGenList*>::iterator it = _instrumentGenerators.begin(); it != _instrumentGenerators.end(); it++ )
+	{
+		delete *it;
+	}
 }
 
 // Note that this memory is internal to the class. You MUST copy it if you're going to store it.
@@ -337,10 +383,11 @@ bool SoundFont::ProcessPdtaListChunk(unsigned char* data, unsigned int size)
 			printf("Section is %d bytes", value);
 			unsigned char* theData = new unsigned char[value];
 			memcpy(theData, &(data[ptr]), value);
-			sfPresetHeader presetHdr;
 			for( int i = 0; i < value/38; i++ )
 			{
-				memcpy( &presetHdr, &(data[ptr]), 38 );
+				sfPresetHeader* presetHdr = new sfPresetHeader();
+				memcpy( presetHdr, &(data[ptr]), 38 );
+				_presets.push_back(presetHdr);
 				ptr += 38;
 			}
 			delete[] theData;
@@ -353,10 +400,11 @@ bool SoundFont::ProcessPdtaListChunk(unsigned char* data, unsigned int size)
 			printf("Section is %d bytes", value);
 			unsigned char* theData = new unsigned char[value];
 			memcpy(theData, &(data[ptr]), value);
-			sfPresetBag presetBag;
 			for( int i = 0; i < value/4; i++ )
 			{
-				memcpy( &presetBag, &(data[ptr]), 4 );
+				sfPresetBag* presetBag = new sfPresetBag();
+				memcpy( presetBag, &(data[ptr]), 4 );
+				_presetBags.push_back(presetBag);
 				ptr += 4;
 			}
 			delete[] theData;
@@ -369,10 +417,11 @@ bool SoundFont::ProcessPdtaListChunk(unsigned char* data, unsigned int size)
 			printf("Section is %d bytes", value);
 			unsigned char* theData = new unsigned char[value];
 			memcpy(theData, &(data[ptr]), value);
-			sfModList modList;
 			for( int i = 0; i < value/10; i++ )
 			{
-				memcpy( &modList, &(data[ptr]), 10 );
+				sfModList* modList = new sfModList();
+				memcpy( modList, &(data[ptr]), 10 );
+				_presetModulators.push_back(modList);
 				ptr += 10;
 			}
 			delete[] theData;
@@ -385,10 +434,11 @@ bool SoundFont::ProcessPdtaListChunk(unsigned char* data, unsigned int size)
 			printf("Section is %d bytes", value);
 			unsigned char* theData = new unsigned char[value];
 			memcpy(theData, &(data[ptr]), value);
-			sfGenList genList;
 			for( int i = 0; i < value/4; i++ )
 			{
-				memcpy( &genList, &(data[ptr]), 4 );
+				sfGenList* genList = new sfGenList();
+				memcpy( genList, &(data[ptr]), 4 );
+				_presetGenerators.push_back(genList);
 				ptr += 4;
 			}
 			delete[] theData;
@@ -401,10 +451,11 @@ bool SoundFont::ProcessPdtaListChunk(unsigned char* data, unsigned int size)
 			printf("Section is %d bytes", value);
 			unsigned char* theData = new unsigned char[value];
 			memcpy(theData, &(data[ptr]), value);
-			sfInst inst;
 			for( int i = 0; i < value/22; i++ )
 			{
-				memcpy( &inst, &(data[ptr]), 22 );
+				sfInst* inst = new sfInst();
+				memcpy( inst, &(data[ptr]), 22 );
+				_instruments.push_back(inst);
 				ptr += 22;
 			}
 			delete[] theData;
@@ -417,10 +468,11 @@ bool SoundFont::ProcessPdtaListChunk(unsigned char* data, unsigned int size)
 			printf("Section is %d bytes", value);
 			unsigned char* theData = new unsigned char[value];
 			memcpy(theData, &(data[ptr]), value);
-			sfInstBag instBag;
 			for( int i = 0; i < value/4; i++ )
 			{
-				memcpy( &instBag, &(data[ptr]), 4 );
+				sfInstBag* instBag = new sfInstBag();
+				memcpy( instBag, &(data[ptr]), 4 );
+				_instrumentBags.push_back(instBag);
 				ptr += 4;
 			}
 			delete[] theData;
@@ -433,10 +485,11 @@ bool SoundFont::ProcessPdtaListChunk(unsigned char* data, unsigned int size)
 			printf("Section is %d bytes", value);
 			unsigned char* theData = new unsigned char[value];
 			memcpy(theData, &(data[ptr]), value);
-			sfModList modList;
 			for( int i = 0; i < value/10; i++ )
 			{
-				memcpy( &modList, &(data[ptr]), 10 );
+				sfModList* modList = new sfModList();
+				memcpy( modList, &(data[ptr]), 10 );
+				_instrumentModulators.push_back(modList);
 				ptr += 10;
 			}
 			delete[] theData;
@@ -449,10 +502,11 @@ bool SoundFont::ProcessPdtaListChunk(unsigned char* data, unsigned int size)
 			printf("Section is %d bytes", value);
 			unsigned char* theData = new unsigned char[value];
 			memcpy(theData, &(data[ptr]), value);
-			sfInstGenList genList;
 			for( int i = 0; i < value/4; i++ )
 			{
-				memcpy( &genList, &(data[ptr]), 4 );
+				sfInstGenList* genList = new sfInstGenList();
+				memcpy( genList, &(data[ptr]), 4 );
+				_instrumentGenerators.push_back(genList);
 				ptr += 4;
 			}
 			delete[] theData;
@@ -465,10 +519,11 @@ bool SoundFont::ProcessPdtaListChunk(unsigned char* data, unsigned int size)
 			printf("Section is %d bytes", value);
 			unsigned char* theData = new unsigned char[value];
 			memcpy(theData, &(data[ptr]), value);
-			sfSample sample;
 			for( int i = 0; i < value/46; i++ )
 			{
-				memcpy( &sample, &(data[ptr]), 46 );
+				sfSample* sample = new sfSample();
+				memcpy( sample, &(data[ptr]), 46 );
+				_samples.push_back(sample);
 				ptr += 46;
 			}
 			delete[] theData;

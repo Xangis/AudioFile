@@ -1,6 +1,8 @@
 #ifndef _SOUNDFONT_H_
 #define _SOUNDFONT_H_
 
+#include <list>
+
 // Implementation note:
 //
 // We're using unsigned short in place of WORD.
@@ -64,12 +66,12 @@ struct sfVersionTag
 struct sfPresetHeader
 {
 	char achPresetName[20];
-	unsigned short wPreset;
-	unsigned short wBank;
-	unsigned short wPresetBagNdx;
-	unsigned long dwLibrary;
-	unsigned long dwGenre;
-	unsigned long dwMorphology;
+	unsigned short wPreset; // MIDI preset number.
+	unsigned short wBank; // MIDI bank number.
+	unsigned short wPresetBagNdx; // Index to the preset's zone list in the PBAG sub-chunk.
+	unsigned long dwLibrary; // Unused, for future implementation.
+	unsigned long dwGenre; // Unused, for future implementation.
+	unsigned long dwMorphology; // Unused, for future implementation.
 };
 
 struct sfPresetBag
@@ -161,6 +163,15 @@ private:
 	unsigned int _sampleDataLength;
 	sfVersionTag _versionInfo;
 	sfVersionTag _romVersionInfo;
+	std::list<sfSample *> _samples;
+	std::list<sfPresetHeader *> _presets;
+	std::list<sfPresetBag *> _presetBags;
+	std::list<sfModList *> _presetModulators;
+	std::list<sfGenList *> _presetGenerators;
+	std::list<sfInst *> _instruments;
+	std::list<sfInstBag *> _instrumentBags;
+	std::list<sfModList *> _instrumentModulators;
+	std::list<sfInstGenList *> _instrumentGenerators;
 };
 
 #endif
