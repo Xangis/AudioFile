@@ -142,8 +142,23 @@ public:
 	SoundFont();
 	~SoundFont();
 	bool Load(const char* filename);
+	unsigned char* GetName();
 private:
+	bool ProcessInfoListChunk(unsigned char* data, unsigned int size);
+	bool ProcessSdtaListChunk(unsigned char* data, unsigned int size);
+	bool ProcessPdtaListChunk(unsigned char* data, unsigned int size);
 	bool _loaded;
+	unsigned char* _name;
+	unsigned char* _engine;
+	unsigned char* _product;
+	unsigned char* _engineer;
+	unsigned char* _software;
+	unsigned char* _date;
+	unsigned char* _comment;
+	unsigned char* _copyright;
+	unsigned char* _sampleData;
+	unsigned int _sampleDataLength;
+	sfVersionTag _versionInfo;
 };
 
 #endif
