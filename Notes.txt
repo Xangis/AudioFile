@@ -1,0 +1,3 @@
+Changes
+
+December 2022 - Updated libsndfile from 1.0.27 to 1.0.28.
