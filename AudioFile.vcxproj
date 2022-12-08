@@ -100,8 +100,8 @@
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">E:\lib\libsndfile-1.0.28\include;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;F:\lib\wxWidgets-3.0.2\include;$(IncludePath)</IncludePath>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">F:\lib\libsndfile-1.0.27\include;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;F:\lib\wxWidgets-3.0.2\include;$(IncludePath)</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">E:\lib\libsndfile-1.0.28\include;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;F:\lib\wxWidgets-3.2.1\include;$(IncludePath)</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">E:\lib\libsndfile-1.0.28\include;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;F:\lib\wxWidgets-3.2.1\include;$(IncludePath)</IncludePath>
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='Demo Release|Win32'">F:\lib\libsndfile-1.0.25\include;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;F:\lib\wxWidgets-3.0.2\include;$(IncludePath)</IncludePath>
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='Demo Debug|Win32'">C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;G:\lib\libsndfile-1.0.24\include;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSdkDir)include;$(FrameworkSDKDir)\include;</IncludePath>
   </PropertyGroup>
