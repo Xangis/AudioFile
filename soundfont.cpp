@@ -383,7 +383,7 @@ bool SoundFont::ProcessPdtaListChunk(unsigned char* data, unsigned int size)
 			printf("Section is %d bytes", value);
 			unsigned char* theData = new unsigned char[value];
 			memcpy(theData, &(data[ptr]), value);
-			for( int i = 0; i < value/38; i++ )
+			for( unsigned int i = 0; i < value/38; i++ )
 			{
 				sfPresetHeader* presetHdr = new sfPresetHeader();
 				memcpy( presetHdr, &(data[ptr]), 38 );
@@ -400,7 +400,7 @@ bool SoundFont::ProcessPdtaListChunk(unsigned char* data, unsigned int size)
 			printf("Section is %d bytes", value);
 			unsigned char* theData = new unsigned char[value];
 			memcpy(theData, &(data[ptr]), value);
-			for( int i = 0; i < value/4; i++ )
+			for( unsigned int i = 0; i < value/4; i++ )
 			{
 				sfPresetBag* presetBag = new sfPresetBag();
 				memcpy( presetBag, &(data[ptr]), 4 );
@@ -417,7 +417,7 @@ bool SoundFont::ProcessPdtaListChunk(unsigned char* data, unsigned int size)
 			printf("Section is %d bytes", value);
 			unsigned char* theData = new unsigned char[value];
 			memcpy(theData, &(data[ptr]), value);
-			for( int i = 0; i < value/10; i++ )
+			for( unsigned int i = 0; i < value/10; i++ )
 			{
 				sfModList* modList = new sfModList();
 				memcpy( modList, &(data[ptr]), 10 );
@@ -434,7 +434,7 @@ bool SoundFont::ProcessPdtaListChunk(unsigned char* data, unsigned int size)
 			printf("Section is %d bytes", value);
 			unsigned char* theData = new unsigned char[value];
 			memcpy(theData, &(data[ptr]), value);
-			for( int i = 0; i < value/4; i++ )
+			for( unsigned int i = 0; i < value/4; i++ )
 			{
 				sfGenList* genList = new sfGenList();
 				memcpy( genList, &(data[ptr]), 4 );
@@ -451,7 +451,7 @@ bool SoundFont::ProcessPdtaListChunk(unsigned char* data, unsigned int size)
 			printf("Section is %d bytes", value);
 			unsigned char* theData = new unsigned char[value];
 			memcpy(theData, &(data[ptr]), value);
-			for( int i = 0; i < value/22; i++ )
+			for( unsigned int i = 0; i < value/22; i++ )
 			{
 				sfInst* inst = new sfInst();
 				memcpy( inst, &(data[ptr]), 22 );
@@ -468,7 +468,7 @@ bool SoundFont::ProcessPdtaListChunk(unsigned char* data, unsigned int size)
 			printf("Section is %d bytes", value);
 			unsigned char* theData = new unsigned char[value];
 			memcpy(theData, &(data[ptr]), value);
-			for( int i = 0; i < value/4; i++ )
+			for( unsigned int i = 0; i < value/4; i++ )
 			{
 				sfInstBag* instBag = new sfInstBag();
 				memcpy( instBag, &(data[ptr]), 4 );
@@ -485,7 +485,7 @@ bool SoundFont::ProcessPdtaListChunk(unsigned char* data, unsigned int size)
 			printf("Section is %d bytes", value);
 			unsigned char* theData = new unsigned char[value];
 			memcpy(theData, &(data[ptr]), value);
-			for( int i = 0; i < value/10; i++ )
+			for( unsigned int i = 0; i < value/10; i++ )
 			{
 				sfModList* modList = new sfModList();
 				memcpy( modList, &(data[ptr]), 10 );
@@ -502,7 +502,7 @@ bool SoundFont::ProcessPdtaListChunk(unsigned char* data, unsigned int size)
 			printf("Section is %d bytes", value);
 			unsigned char* theData = new unsigned char[value];
 			memcpy(theData, &(data[ptr]), value);
-			for( int i = 0; i < value/4; i++ )
+			for( unsigned int i = 0; i < value/4; i++ )
 			{
 				sfInstGenList* genList = new sfInstGenList();
 				memcpy( genList, &(data[ptr]), 4 );
@@ -519,7 +519,7 @@ bool SoundFont::ProcessPdtaListChunk(unsigned char* data, unsigned int size)
 			printf("Section is %d bytes", value);
 			unsigned char* theData = new unsigned char[value];
 			memcpy(theData, &(data[ptr]), value);
-			for( int i = 0; i < value/46; i++ )
+			for( unsigned int i = 0; i < value/46; i++ )
 			{
 				sfSample* sample = new sfSample();
 				memcpy( sample, &(data[ptr]), 46 );
